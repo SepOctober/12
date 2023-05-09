@@ -59,6 +59,22 @@ def get_weather(region):
     # 风向
     wind_dir = response["now"]["windDir"]
     return weather, temp, wind_dir
+   
+   
+   url = "http://d1.weather.com.cn/dingzhi/{}.html?_={}".format(city_id, t)
+    response = get(url, headers=headers)
+    response.encoding = "utf-8"
+    response_data = response.text.split(";")[0].split("=")[-1]
+    response_json = eval(response_data)
+    # print(response_json)
+    weatherinfo = response_json["weatherinfo"]
+    # 天气
+    weathert = weatherinfo["weather"]
+    # 最高气温
+    temp = weatherinfo["temp"]
+    # 最低气温
+    tempn = weatherinfo["tempn"]
+    return weathert, temp, tempn
  
  
 def get_birthday(birthday, year, today):
